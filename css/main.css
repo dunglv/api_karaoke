@@ -1,0 +1,75 @@
+@import url("https://fonts.googleapis.com/css?family=Oswald:400,600");
+html, body, #app, .container{
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	font-family: "Oswald", sans-serif;
+	font-weight: 400;
+	font-size: 14px;
+}
+.container{
+	margin-left: auto;
+	margin-right: auto;
+}
+#secmain{
+	height: 100%;
+	background: url('../images/vadim-sherbakov-41909.jpg') no-repeat;
+	background-size: 100% 100%;
+	position: relative;
+}
+.showprint{
+	height: 100%;
+	position: relative;
+}
+.kr-line{
+	display: block;
+	position: absolute;;
+	bottom: 50px;
+	width: 100%;
+	left: 0;
+	z-index: 1;
+}
+.line span{
+	display: block;
+	position: relative;
+	font-size: 3em;
+	color: #19a6c7;
+	text-decoration: none;
+	text-shadow: 0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111;
+	/*font-weight: 600;*/
+}
+.line.active span::before{
+	content: attr(data-voice);
+	position: absolute;
+	left: 0;
+	height: 100%;
+	top: 0;
+	width: 0;
+	overflow: hidden;
+	white-space: nowrap;
+	text-decoration: none;
+	text-shadow: 0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111;
+	color: #fff;
+}
+.line.unvoice{
+	color: #0E7FA0;
+}
+/*.line span.voiced{
+	color: #fff;
+}*/
+.line.male{
+	color: #351AFF;
+}
+.line.female{
+	color: #D22E2E;
+}
+.line.line-top{
+	display: table;
+	margin-right: auto;
+	text-align: left;
+}
+.line.line-bottom{
+	display: table;
+	margin-left: auto;
+	text-align: right;
+}
