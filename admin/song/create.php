@@ -58,7 +58,45 @@
 							<!-- Default panel contents -->
 							<div class="panel-heading">Panel heading</div>
 							<div class="panel-body">
-								<iframe width="560" height="315" src="https://www.youtube.com/embed/PbkPz5hOWSo" frameborder="0" allowfullscreen></iframe>
+								<div class="row">
+									<div class="col-md-7">
+										<iframe width="560" height="315" src="https://www.youtube.com/embed/PbkPz5hOWSo" frameborder="0" allowfullscreen></iframe>
+									</div>
+									<div class="col-md-5">
+										<?php 
+										$d = file_get_contents('https://www.googleapis.com/youtube/v3/videos?id=79RS6SwVly0&key=AIzaSyBjXlDvy1m-hGgoGwIFqM9xCw1B7G3vBBs&part=snippet,contentDetails,statistics,status');
+										$d = json_decode($d);
+										echo "<pre>";
+										// var_dump(preg_match('/\d+/', "PT10H2M6S"));
+										// echo $kk[0];
+										// var_dump(($d->items)[0]->contentDetails);
+										echo "</pre>";
+										exit;		
+										if (count($d->items) > 0) {
+											$title = (($d->items)[0]->snippet->title);
+											$description = (($d->items)[0]->snippet->description);
+											$dur = ($d->items)[0]->contentDetails->duration;
+											// if (strpos('H', $dur) != false && strpos('M', $dur) != false && strpos('S', $dur) != false) {
+												
+											// }
+											
+										} ?>
+										<table class="table table-striped table-hover">
+											<thead>
+												<tr>
+													<th>Name:</th>
+													<th><?php echo $title; ?></th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>Description</td>
+													<td><?php echo $description; ?></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
 							</div>
 						
 							<!-- Table -->
@@ -101,10 +139,7 @@
 							<!-- Table -->
 							
 						</div>
-						<script type="text/javascript">
-							var dr = $('video');
-							console.log(dr.length);
-						</script>
+						
 					</div>
 					<div class="col-md-7">
 						<div class="panel panel-info">
@@ -179,5 +214,6 @@
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript" src="../js/main.js"></script>
 </body>
 </html>
