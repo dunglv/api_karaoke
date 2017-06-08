@@ -14,3 +14,7 @@ span.word{
     padding: 5px;
     width: auto;
 }
+.about-song{
+	max-height: 400px;
+	overflow-y: auto;
+}

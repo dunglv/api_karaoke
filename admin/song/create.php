@@ -66,35 +66,47 @@
 										<?php 
 										$d = file_get_contents('https://www.googleapis.com/youtube/v3/videos?id=79RS6SwVly0&key=AIzaSyBjXlDvy1m-hGgoGwIFqM9xCw1B7G3vBBs&part=snippet,contentDetails,statistics,status');
 										$d = json_decode($d);
-										echo "<pre>";
-										// var_dump(preg_match('/\d+/', "PT10H2M6S"));
-										// echo $kk[0];
-										// var_dump(($d->items)[0]->contentDetails);
-										echo "</pre>";
-										exit;		
+										$vid = array();
+										preg_match_all('/\d+/', $d->items[0]->contentDetails->duration, $vid);
+										// echo "<pre>";
+										// var_dump($vid[0][0]);
+										// // // echo $kk[0];
+										// // // var_dump(($d->items)[0]->contentDetails);
+										// echo "</pre>";
+										// die;		
 										if (count($d->items) > 0) {
-											$title = (($d->items)[0]->snippet->title);
-											$description = (($d->items)[0]->snippet->description);
-											$dur = ($d->items)[0]->contentDetails->duration;
+											$title = ($d->items[0]->snippet->title);
+											$description = ($d->items[0]->snippet->description);
+											$dur = ($d->items[0]->contentDetails->duration);
 											// if (strpos('H', $dur) != false && strpos('M', $dur) != false && strpos('S', $dur) != false) {
 												
 											// }
 											
 										} ?>
-										<table class="table table-striped table-hover">
-											<thead>
-												<tr>
-													<th>Name:</th>
-													<th><?php echo $title; ?></th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>Description</td>
-													<td><?php echo $description; ?></td>
-												</tr>
-											</tbody>
-										</table>
+										<div class="about-song">
+											<table class="table table-striped table-hover">
+												<thead>
+													<tr>
+														<th>Name:</th>
+														<th><?php echo $title; ?></th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>Description</td>
+														<td><?php echo $description; ?></td>
+													</tr>
+													<tr>
+														<td>Duration:</td>
+														<td><?php echo $vid[0][0].':'.$vid[0][1].':'.$vid[0][2]; ?></td>
+													</tr>
+													<tr>
+														<td>Lyric:</td>
+														<td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex accusamus cupiditate molestias aliquid quam consequatur temporibus voluptas perspiciatis, dolore deserunt, eveniet in dignissimos est aut eos error possimus mollitia, voluptates praesentium repellat excepturi sint. Inventore ducimus corrupti harum ex, expedita. Fugit aut quibusdam, repellat harum recusandae alias sequi repellendus voluptate nesciunt. Cupiditate quidem maxime vitae, quibusdam inventore ut eaque odit amet tempora excepturi, in a asperiores repudiandae adipisci voluptas doloribus, temporibus eligendi eius facere recusandae consequatur! Dolores officia ipsum consequatur, odit ipsa aliquid id, sapiente rem modi voluptates eos quo sunt ullam fuga. Ex vero expedita natus optio ipsum minima eius sit nulla dicta maiores fugiat vitae dolorum quia velit error nostrum, blanditiis illum, rerum quae accusantium praesentium! Earum unde rem nobis aliquam nemo inventore deserunt hic quasi odio doloremque dignissimos adipisci illum cupiditate expedita dolor quos iste, doloribus omnis repellendus eligendi laborum dolorum saepe debitis officiis. Dolor minima blanditiis nemo. Ipsam quia dolores ad, pariatur fuga quam a placeat consequatur soluta eaque minus praesentium porro, beatae quis quisquam, corporis illum. Rerum voluptate fugiat, autem officiis, inventore perferendis ratione qui velit nam exercitationem, eaque iure nostrum similique eos! Deleniti quaerat distinctio nesciunt rerum voluptates ipsum excepturi et nostrum perspiciatis dignissimos.</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -123,9 +135,13 @@
 										<tr>
 											<td>1</td>
 											<td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam amet similique beatae minus dicta id.</td>
-											<td><button type="button" class="btn btn-success"><span class="glyphicon glyphicon-check"></span></button></td>
-											<td><button type="button" class="btn btn-success"><span class="glyphicon glyphicon-check"></span></button></td>
-											<td>01:00:00</td>
+											<td>
+												<input type="text" class="field_start start_01" placeholder="00:00:00">
+											</td>
+											<td>
+												<input type="text" class="field_stop stop_01" placeholder="00:00:00">
+											</td>
+											<td><span id="time_duration"></span></td>
 											<td>#00</td>
 										</tr>
 									</tbody>
