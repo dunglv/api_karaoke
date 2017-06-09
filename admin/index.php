@@ -1,3 +1,6 @@
+<?php 
+	include_once __DIR__.'/Db/Db.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

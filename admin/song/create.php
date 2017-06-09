@@ -60,27 +60,30 @@
 							<div class="panel-body">
 								<div class="row">
 									<div class="col-md-7">
-										<iframe width="560" height="315" src="https://www.youtube.com/embed/PbkPz5hOWSo" frameborder="0" allowfullscreen></iframe>
+
+										<iframe id="vid" width="560" height="315" src="https://www.youtube.com/embed/PbkPz5hOWSo" frameborder="0" allowfullscreen></iframe>
 									</div>
 									<div class="col-md-5">
 										<?php 
-										$d = file_get_contents('https://www.googleapis.com/youtube/v3/videos?id=79RS6SwVly0&key=AIzaSyBjXlDvy1m-hGgoGwIFqM9xCw1B7G3vBBs&part=snippet,contentDetails,statistics,status');
+										$d = file_get_contents('https://www.googleapis.com/youtube/v3/videos?id=0d5RNTOKBYQ&key=AIzaSyBjXlDvy1m-hGgoGwIFqM9xCw1B7G3vBBs&part=snippet,contentDetails,statistics,status');
 										$d = json_decode($d);
-										$vid = array();
-										preg_match_all('/\d+/', $d->items[0]->contentDetails->duration, $vid);
-										// echo "<pre>";
-										// var_dump($vid[0][0]);
-										// // // echo $kk[0];
-										// // // var_dump(($d->items)[0]->contentDetails);
-										// echo "</pre>";
-										// die;		
+											
 										if (count($d->items) > 0) {
 											$title = ($d->items[0]->snippet->title);
 											$description = ($d->items[0]->snippet->description);
 											$dur = ($d->items[0]->contentDetails->duration);
-											// if (strpos('H', $dur) != false && strpos('M', $dur) != false && strpos('S', $dur) != false) {
-												
-											// }
+											$vid = array();
+											preg_match_all('/\d+/', $dur, $vid);
+											$td = '';
+											if(strpos($dur, 'H') !==false && strpos($dur, 'M') !== false && strpos($dur, 'S') !== false){
+												$td = $vid[0][0].':'.$vid[0][1].':'.$vid[0][2];
+											}elseif(strpos($dur, 'H') === false && strpos($dur, 'M') !== false && strpos($dur, 'S') !== false){
+												$td = '00:'.$vid[0][0].':'.$vid[0][1];
+											}elseif(strpos($dur, 'H') === false && strpos($dur, 'M') === false && strpos($dur, 'S') !== false){
+													$td = '00:00:'.$vid[0][0];
+											}else{
+												$td = '00:00:00';
+											}
 											
 										} ?>
 										<div class="about-song">
@@ -98,7 +101,7 @@
 													</tr>
 													<tr>
 														<td>Duration:</td>
-														<td><?php echo $vid[0][0].':'.$vid[0][1].':'.$vid[0][2]; ?></td>
+														<td><?php echo $td; ?></td>
 													</tr>
 													<tr>
 														<td>Lyric:</td>
@@ -118,40 +121,54 @@
 					<div class="col-md-12">
 						<div class="panel panel-default">
 							<!-- Default panel contents -->
+							<form action="./save.php" method="POST">
 							<div class="panel-heading">Panel heading</div>
 							<div class="panel-body">
-								<table class="table table-striped table-hover">
-									<thead>
-										<tr>
-											<th width="1%">#0</th>
-											<th>#Lyric</th>
-											<th width="10%">#Start</th>
-											<th width="10%">#End</th>
-											<th width="10%">#Timing</th>
-											<th width="12%">#b</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>1</td>
-											<td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam amet similique beatae minus dicta id.</td>
-											<td>
-												<input type="text" class="field_start start_01" placeholder="00:00:00">
-											</td>
-											<td>
-												<input type="text" class="field_stop stop_01" placeholder="00:00:00">
-											</td>
-											<td><span id="time_duration"></span></td>
-											<td>#00</td>
-										</tr>
-									</tbody>
-								</table>
+								
+									<table class="table table-striped table-hover">
+										<thead>
+											<tr>
+												<th width="1%">#0</th>
+												<th>#Lyric</th>
+												<th width="10%">#Start</th>
+												<th width="10%">#End</th>
+												<th width="10%">#Timing</th>
+												<th width="12%">#b</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>1</td>
+												<td><input type="text" style="width:100%;" name="line[]" placeholder="Input lyric..."></td>
+												<td>
+													<input type="text" name="start[]" class="field_start start_01" placeholder="00:00:00">
+												</td>
+												<td>
+													<input type="text" name="stop[]" class="field_stop stop_01" placeholder="00:00:00">
+												</td>
+												<td><span id="time_duration"></span></td>
+												<td><button id="on_start_01" type="button" class="btn btn-default btn-kara-start"><i class="fa fa-caret-square-o-right"></i></button><button id="on_stop_01" type="button" class="btn btn-default btn-kara-stop"><i class="fa fa-caret-square-o-left"></i></button></td>
+											</tr>
+											<tr>
+												<td>2</td>
+												<td><input type="text" style="width:100%;" name="line[]" placeholder="Input lyric..."></td>
+												<td>
+													<input type="text" name="start[]" class="field_start start_01" placeholder="00:00:00">
+												</td>
+												<td>
+													<input type="text" name="stop[]" class="field_stop stop_01" placeholder="00:00:00">
+												</td>
+												<td><span id="time_duration"></span></td>
+												<td><button  type="button" class="btn btn-default "><i class="fa fa-caret-square-o-right"></i></button><button  type="button" class="btn btn-default"><i class="fa fa-caret-square-o-left"></i></button></td>
+											</tr>
+										</tbody>
+									</table>
 							</div>
 							<div class="panel-footer text-right">
-								<button type="button" class="btn btn-success"><span class="glyphicon glyphicon-saved"></span> Save</button>
-								<button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Save</button>
+								<button  type="submit" class="btn btn-success"><span class="glyphicon glyphicon-saved"></span> Save</button>
+								<button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
 							</div>
-
+							</form>
 							<!-- Table -->
 							
 						</div>

@@ -10,8 +10,10 @@ $(function() {
     var f_str = $('.field_start');
     var f_stp = $('.field_stop');
     var f_dur = $('#time_duration');
-    var f1 = false, f2 = false;
-    var t1 = '', t2 ='';
+    var f1 = false,
+        f2 = false;
+    var t1 = '',
+        t2 = '';
     f_str.each(function(i) {
         $(this).keydown(function(e) {
             var f_str_val = $(this).val();
@@ -28,21 +30,21 @@ $(function() {
             if (!f_str_val.match(reg) && len > 0) {
                 alert("Format string: HH:mm:ss [00:00:00]");
                 f1 = false;
-            }else{
-            	f1 = true;
-            	t1 = f_str_val;
+            } else {
+                f1 = true;
+                t1 = f_str_val;
             }
 
-            if (f1&&f2) {
-		     	console.log('Ok');
-		     	f_dur.html(cmp_duration(t1, t2));
-		     }else{
-		     	console.log('error');
-		     }
-            
+            if (f1 && f2) {
+                console.log('Ok');
+                f_dur.html(cmp_duration(t1, t2));
+            } else {
+                console.log('error');
+            }
+
         });
     });
-     f_stp.each(function(i) {
+    f_stp.each(function(i) {
         $(this).keydown(function(e) {
             var f_str_val = $(this).val();
             var len = f_str_val.length;
@@ -58,30 +60,41 @@ $(function() {
             if (!f_str_val.match(reg) && len > 0) {
                 alert("Format string: HH:mm:ss [00:00:00]");
                 f2 = false;
-            }else{
-            	f2 = true;
-            	t2 = f_str_val;
+            } else {
+                f2 = true;
+                t2 = f_str_val;
             }
-            if (f1&&f2) {
-		     	f_dur.html(cmp_duration(t1, t2));
-		     	console.log('Ok');
-		     }else{
-		     	console.log('error');
-		     }
-            
+            if (f1 && f2) {
+                f_dur.html(cmp_duration(t1, t2));
+                console.log('Ok');
+            } else {
+                console.log('error');
+            }
+
         });
     });
+
+
+    var btn_start = $('.btn-kara-start');
+    btn_start.each(function(i) {
+        btn_start.eq(i).on('click', function(e) {
+            var id = $(this).attr('id').substr(9);
+            $('.start_'+id).val('00:00:04.12');
+                // console.log($('#vid').getCurrentTime());
+        });
+    });
+
 
     // console.log(f_str.length);
 
     function cmp_duration(time_start = "10:10:10", time_stop = "10:10:11") {
-    	var a_stt = time_start.split(':');
-    	var a_stp = time_stop.split(':');
-    	if ((Number(a_stt[0])*3600+Number(a_stt[1])*60+Number(a_stt[2])) > (Number(a_stp[0])*3600+Number(a_stp[1])*60+Number(a_stp[2]))) {
-    		return 'Error';
-    	}else{
-    		return Math.abs(Number(a_stp[0])-Number(a_stt[0]))+':'+ Math.abs(Number(a_stp[1])-Number(a_stt[1]))+':'+Math.abs(Number(a_stp[2])-Number(a_stt[2]));
-    	}
+        var a_stt = time_start.split(':');
+        var a_stp = time_stop.split(':');
+        if ((Number(a_stt[0]) * 3600 + Number(a_stt[1]) * 60 + Number(a_stt[2])) > (Number(a_stp[0]) * 3600 + Number(a_stp[1]) * 60 + Number(a_stp[2]))) {
+            return 'Error';
+        } else {
+            return Math.abs(Number(a_stp[0]) - Number(a_stt[0])) + ':' + Math.abs(Number(a_stp[1]) - Number(a_stt[1])) + ':' + Math.abs(Number(a_stp[2]) - Number(a_stt[2]));
+        }
     }
 
 });

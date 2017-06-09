@@ -24,22 +24,25 @@ html, body, #app, .container{
 .kr-line{
 	display: block;
 	position: absolute;;
-	bottom: 50px;
+	bottom: 5%;
 	width: 100%;
 	left: 0;
 	z-index: 1;
 }
+
 .line span{
-	display: block;
+	/*display: block;*/
+	margin-right: 10px;
 	position: relative;
 	font-size: 3em;
 	color: #19a6c7;
 	text-decoration: none;
+	white-space: nowrap;
 	text-shadow: 0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111;
 	/*font-weight: 600;*/
 }
 .line.active span::before{
-	content: attr(data-voice);
+	content: attr(data-kara);
 	position: absolute;
 	left: 0;
 	height: 100%;
@@ -48,8 +51,14 @@ html, body, #app, .container{
 	overflow: hidden;
 	white-space: nowrap;
 	text-decoration: none;
-	text-shadow: 0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111;
+	/*text-shadow: 0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111;*/
 	color: #fff;
+}
+.line.active span.voiced::before{
+	width: 100%;
+	-webkit-transition: inherit;
+	-o-transition: inherit;
+	transition: inherit;
 }
 .line.unvoice{
 	color: #0E7FA0;
@@ -67,9 +76,11 @@ html, body, #app, .container{
 	display: table;
 	margin-right: auto;
 	text-align: left;
+	white-space: nowrap;
 }
 .line.line-bottom{
 	display: table;
 	margin-left: auto;
 	text-align: right;
+	white-space: nowrap;
 }
