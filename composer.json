@@ -1,0 +1,10 @@
+{
+    "name": "vietd_000/api_karaoke",
+    "description": "Karaoke",
+    "require": {
+    	"phroute/phroute": "1.*",
+        "slim/slim": "^3.8",
+        "slim/php-view": "^2.2",
+        "illuminate/database": "^5.4"
+    }
+}

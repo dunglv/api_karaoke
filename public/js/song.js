@@ -75,14 +75,7 @@ $(function() {
     });
 
 
-    var btn_start = $('.btn-kara-start');
-    btn_start.each(function(i) {
-        btn_start.eq(i).on('click', function(e) {
-            var id = $(this).attr('id').substr(9);
-            $('.start_'+id).val('00:00:04.12');
-                // console.log($('#vid').getCurrentTime());
-        });
-    });
+   
 
 
     // console.log(f_str.length);

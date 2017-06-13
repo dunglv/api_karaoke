@@ -1,5 +1,5 @@
 <?php
-namespace admin\Db;
+// namespace admin\Db;
 
 class Db
 {
@@ -7,7 +7,7 @@ class Db
 	protected $user; 
 	protected $password; 
 	protected $db;
-	public static $connect;
+	public $connect;
 	function __construct($host, $user, $password, $db)
 	{
 		$this->host = $host;
@@ -20,7 +20,8 @@ class Db
 			return "Error: Not connect server.";
 		}
 		$this->connect = mysqli_connect($host, $user, $password, $db);
-		return $this->connect;
+		var_dump($this->connect);
+		// return $this->connect;
 	}
 
 	public static function save_song($value='')
