@@ -84,3 +84,8 @@ html, body, #app, .container{
 	text-align: right;
 	white-space: nowrap;
 }
+
+.ll_ax{
+	margin-left: 10px;
+	margin-bottom: 10px;
+}

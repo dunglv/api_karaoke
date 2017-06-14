@@ -7,7 +7,9 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="<?php echo $base_url; ?>/public/css/main.css" rel="stylesheet">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 
@@ -56,6 +58,7 @@
             </nav>
             <div class="container">
                 <div class="row">
+                    <?php if(isset($song) && count($song) > 0): ?>
                     <form action="" method="POST">
                         <div class="col-md-12">
                             <div class="panel panel-default">
@@ -104,34 +107,34 @@
                                         </div>
                                         <div class="col-md-5">
                                             <?php 
-										$d = file_get_contents('https://www.googleapis.com/youtube/v3/videos?id=PbkPz5hOWSo&key=AIzaSyBjXlDvy1m-hGgoGwIFqM9xCw1B7G3vBBs&part=snippet,contentDetails,statistics,status');
-										$d = json_decode($d);
-											
-										if (count($d->items) > 0) {
-											$title = ($d->items[0]->snippet->title);
-											$description = ($d->items[0]->snippet->description);
-											$dur = ($d->items[0]->contentDetails->duration);
-											$vid = array();
-											preg_match_all('/\d+/', $dur, $vid);
-											$td = '';
-											if(strpos($dur, 'H') !==false && strpos($dur, 'M') !== false && strpos($dur, 'S') !== false){
-												$td = $vid[0][0].':'.$vid[0][1].':'.$vid[0][2];
-											}elseif(strpos($dur, 'H') === false && strpos($dur, 'M') !== false && strpos($dur, 'S') !== false){
-												$td = '00:'.$vid[0][0].':'.$vid[0][1];
-											}elseif(strpos($dur, 'H') === false && strpos($dur, 'M') === false && strpos($dur, 'S') !== false){
-													$td = '00:00:'.$vid[0][0];
-											}else{
-												$td = '00:00:00';
-											}
-											
-										} ?>
+                                        $d = file_get_contents('https://www.googleapis.com/youtube/v3/videos?id=PbkPz5hOWSo&key=AIzaSyBjXlDvy1m-hGgoGwIFqM9xCw1B7G3vBBs&part=snippet,contentDetails,statistics,status');
+                                        $d = json_decode($d);
+                                            
+                                        if (count($d->items) > 0) {
+                                            $title = ($d->items[0]->snippet->title);
+                                            $description = ($d->items[0]->snippet->description);
+                                            $dur = ($d->items[0]->contentDetails->duration);
+                                            $vid = array();
+                                            preg_match_all('/\d+/', $dur, $vid);
+                                            $td = '';
+                                            if(strpos($dur, 'H') !==false && strpos($dur, 'M') !== false && strpos($dur, 'S') !== false){
+                                                $td = $vid[0][0].':'.$vid[0][1].':'.$vid[0][2];
+                                            }elseif(strpos($dur, 'H') === false && strpos($dur, 'M') !== false && strpos($dur, 'S') !== false){
+                                                $td = '00:'.$vid[0][0].':'.$vid[0][1];
+                                            }elseif(strpos($dur, 'H') === false && strpos($dur, 'M') === false && strpos($dur, 'S') !== false){
+                                                    $td = '00:00:'.$vid[0][0];
+                                            }else{
+                                                $td = '00:00:00';
+                                            }
+                                            
+                                        } ?>
                                             <div class="about-song">
                                                 <table class="table table-striped table-hover">
                                                     <thead>
                                                         <tr>
                                                             <th>Name:</th>
                                                             <th>
-                                                            	<input type="hidden" name="title" value="<?php echo $title; ?>">
+                                                                <input type="hidden" name="title" value="<?php echo $title; ?>">
                                                                 <?php echo $title; ?>
                                                             </th>
                                                         </tr>
@@ -140,14 +143,14 @@
                                                         <tr>
                                                             <td>Description</td>
                                                             <td>
-                                                            	<input type="hidden" name="description" value="<?php echo $description; ?>">
+                                                                <input type="hidden" name="description" value="<?php echo $description; ?>">
                                                                 <?php echo $description; ?>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td>Duration:</td>
                                                             <td>
-                                                            	<input type="hidden" name="duration" value="<?php echo $td; ?>">
+                                                                <input type="hidden" name="duration" value="<?php echo $td; ?>">
                                                                 <?php echo $td; ?>
                                                             </td>
                                                         </tr>
@@ -167,7 +170,88 @@
                         <div class="col-md-12">
                             <div class="panel panel-default">
                                 <!-- Default panel contents -->
-                                <div class="panel-heading">Panel heading</div>
+                                <div class="panel-heading">Customzing karaoke line</div>
+                                <div class="panel-body">
+                                    <table class="table table-hover">
+                                        <tbody>
+                                            <tr>
+                                                <td width="50%">
+                                                    <div id="slider">
+                                                    </div>
+                                                    <script>
+                                                    $(function() {
+                                                        // var interval = setInterval(function(){
+                                                        //     $('#slider').slider({
+                                                        //         min: 0,
+                                                        //         max: 10,
+                                                        //         step: 0.01,
+                                                        //         slide: function(e, u){
+                                                        //             $('#set_time').val(u.value);
+
+                                                        //         }, 
+                                                        //         animate: function(){
+
+                                                        //         }
+                                                        //     });
+                                                        // }, 1000);
+                                                        
+                                                        $('.rlclick').on('click', function(e){
+                                                            var i_this = $(this).prop('id').substring(3);
+                                                            var v_str = $('#il_'+i_this).val();
+                                                            //Duration
+                                                            var dur = Number($('#so_'+i_this).val()) - Number($('#sa_'+i_this).val());
+                                                            var sd = 0;
+                                                            //Separate word
+                                                            var art = v_str.split(' ');
+                                                            var ll = '';
+                                                            for (var i = 0; i < art.length; i++) {
+                                                                ll += '<span id="ll_ax_'+i+'" class="btn btn-default ll_ax">'+art[i]+'</span>';
+                                                            }
+                                                            $('#slider').html(ll);
+                                                            $( ".ll_ax" ).resizable({
+                                                                handles:  'e',
+                                                                resize: function(e, u){
+                                                                    var w = u.size.width;
+
+                                                                    console.log(u);
+                                                                }
+                                                            });
+                                                        });
+                                                        $('#play').on('click', function() {
+                                                            // interval;
+                                                            // player.playVideo();
+                                                            if ($(this).hasClass('pause')) {
+                                                                $(this).removeClass('pause').html('<i class="fa fa-pause"></i>');
+                                                                player.playVideo();
+                                                            } else {
+                                                                $(this).addClass('pause').html('<i class="fa fa-play"></i>');
+                                                                player.pauseVideo();
+                                                            }
+                                                            // player.seekTo(10);
+                                                        });
+
+                                                        $('#pause').on('click', function() {
+                                                            player.pauseVideo();
+                                                        });
+                                                    });
+                                                    </script>
+                                                </td>
+                                                <td width="10%">
+                                                    <input id="set_time" type="text" placeholder="Current time..">
+                                                </td>
+                                                <td width="20%">
+                                                    <button type="button" class="btn btn-success"><i class="fa fa-retweet"></i></button>
+                                                    <button type="button" class="btn btn-primary pause" id="play"><i class="fa fa-play"></i></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- Table -->
+                            </div>
+                            <div class="panel panel-default">
+                                <!-- Default panel contents -->
+                                <div class="panel-heading"><i class="fa fa-music"></i> Lyric</div>
                                 <div class="panel-body">
                                     <table class="table table-striped table-hover">
                                         <thead>
@@ -181,40 +265,30 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
+                                            <?php 
+                                                foreach ($song as $s) {
+                                                    $ts = json_decode($s->lyrics, true);
+                                                    for ($i=0; $i < count($ts); $i++) { 
+                                                    
+                                            ?>
+                                            <tr id="rl_<?php echo $i+1; ?>" class="rlclick">
+                                                <td><?php echo $i+1; ?></td>
                                                 <td>
-                                                    <input type="text" style="width:100%;" name="line[]" placeholder="Input lyric...">
+                                                    <input id="il_<?php echo $i+1; ?>" type="text" style="width:100%;" name="line[]" readonly="true" placeholder="Input lyric..." value="<?php echo $ts[$i]['line'] ?>">
                                                 </td>
                                                 <td>
-                                                    <input type="text" name="start[]" class="field_start start_01" placeholder="00:00:00">
+                                                    <input id="sa_<?php echo $i+1; ?>" type="text" name="start[]" readonly="true" class="field_start sa_01" placeholder="00:00:00" value="<?php echo $ts[$i]['start']; ?>">
                                                 </td>
                                                 <td>
-                                                    <input type="text" name="stop[]" class="field_stop stop_01" placeholder="00:00:00">
-                                                </td>
-                                                <td><span id="time_duration"></span></td>
-                                                <td>
-                                                    <button id="on_start_01" type="button" class="btn btn-default btn-kara-start"><i class="fa fa-caret-square-o-right"></i></button>
-                                                    <button id="on_stop_01" type="button" class="btn btn-default btn-kara-stop"><i class="fa fa-caret-square-o-left"></i></button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>
-                                                    <input type="text" style="width:100%;" name="line[]" placeholder="Input lyric...">
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="start[]" class="field_start start_02" placeholder="00:00:00">
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="stop[]" class="field_stop stop_02" placeholder="00:00:00">
+                                                    <input id="so_<?php echo $i+1; ?>" type="text" name="stop[]" readonly="true" class="field_stop stop_01" placeholder="00:00:00" value="<?php echo $ts[$i]['stop']; ?>">
                                                 </td>
                                                 <td><span id="time_duration"></span></td>
                                                 <td>
-                                                    <button id="on_start_02" type="button" class="btn btn-default btn-kara-start"><i class="fa fa-caret-square-o-right"></i></button>
-                                                    <button id="on_stop_02" type="button" class="btn btn-default btn-kara-stop"><i class="fa fa-caret-square-o-left"></i></button>
+                                                    <button id="bl_<?php echo $i+1; ?>" type="button" class="btn btn-default btn-kara-start"><i class="fa fa-refresh"></i></button>
                                                 </td>
                                             </tr>
+                                            <?php }
+                                                } ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -224,91 +298,9 @@
                                 </div>
                                 <!-- Table -->
                             </div>
+                        </div>
                     </form>
-                    </div>
-                    <div class="col-md-7">
-                        <div class="panel panel-info">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Panel Left</h3>
-                            </div>
-                            <div class="panel-body">
-                                <table class="table table-striped table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>#No</th>
-                                            <th>Word</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Lorem ipsum dolor sit amet, consectetur adipisicing.</td>
-                                            <td>
-                                                <button class="btn btn-success"><span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span></button>
-                                                <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Lorem ipsum dolor sit amet, consectetur adipisicing.</td>
-                                            <td>
-                                                <button class="btn btn-success"><span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span></button>
-                                                <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Lorem ipsum dolor sit amet, consectetur adipisicing.</td>
-                                            <td>
-                                                <button class="btn btn-success"><span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span></button>
-                                                <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>4</td>
-                                            <td>Lorem ipsum dolor sit amet, consectetur adipisicing.</td>
-                                            <td>
-                                                <button class="btn btn-success"><span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span></button>
-                                                <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-5">
-                        <div class="panel panel-info">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Panel right</h3>
-                            </div>
-                            <div class="panel-body">
-                                <table class="table table-striped table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>#No</th>
-                                            <th>#Text</th>
-                                            <th>#Timing</th>
-                                            <th>#Save</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td width="1%">1</td>
-                                            <td width="50%"><span class="word">Lorem</span></td>
-                                            <td>
-                                                <input type="text" name="#" value="01:00:00">
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-saved"></span></button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
