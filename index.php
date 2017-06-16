@@ -95,6 +95,26 @@ $app->get('/admin/create-karaoke/{sis}', function($req, $res, $args) use ($conn)
 	$res =  $this->view->render($res, 'admin/create-karaoke.php', array('song' => $song));
 	return $res;
 });
+
+$app->post('/admin/create-karaoke/{sis}', function($req, $res, $args) use ($conn){
+	$sis = $args['sis'];
+	$query = "SELECT * FROM songs WHERE sis = '".$sis."'";
+	$rst = $conn->query($query);
+	$song = $rst->fetchAll(PDO::FETCH_OBJ);
+	$kr = $req->getParsedBodyParam('kr');
+	if (count($song) > 0) {
+		$usql = "UPDATE songs SET karaoke = '".$kr."' WHERE sis = '".$sis."'";
+		if ($conn->query($usql)) {
+			return '{"success":"Update success song '.$sis.'"}';
+		}else{
+			return '{"error":"Error to process update data"}';
+		}
+		// $res =  $this->view->render($res, 'admin/create-karaoke.php', array('song' => $song));
+		// return $res;
+	}else{
+		return '{"error":"Not found your song"}';
+	}
+});
 //*************************************************
 // ROUTER UI FRONT
 //*************************************************

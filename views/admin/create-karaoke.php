@@ -175,73 +175,163 @@
                                     <table class="table table-hover">
                                         <tbody>
                                             <tr>
-                                                <td width="50%">
-                                                    <div id="slider">
+                                                <td width="100%" colspan="2">
+                                                    <div class="ct_slider">
+                                                        <div id="slider" class="slider_dx play" data-start="">
+                                                        </div>
                                                     </div>
                                                     <script>
                                                     $(function() {
-                                                        // var interval = setInterval(function(){
-                                                        //     $('#slider').slider({
-                                                        //         min: 0,
-                                                        //         max: 10,
-                                                        //         step: 0.01,
-                                                        //         slide: function(e, u){
-                                                        //             $('#set_time').val(u.value);
-
-                                                        //         }, 
-                                                        //         animate: function(){
-
-                                                        //         }
-                                                        //     });
-                                                        // }, 1000);
+                                                        var lwt = 0;
+                                                        var stal, stol, dal, lid, i_this;
                                                         
-                                                        $('.rlclick').on('click', function(e){
-                                                            var i_this = $(this).prop('id').substring(3);
-                                                            var v_str = $('#il_'+i_this).val();
+                                                        $('.rlclick').on('click', function(e) {
+                                                            i_this = $(this).prop('id').substring(3);
+                                                            var v_str = $('#il_' + i_this).val();
                                                             //Duration
-                                                            var dur = Number($('#so_'+i_this).val()) - Number($('#sa_'+i_this).val());
+                                                            var dur = Number($('#so_' + i_this).val()) - Number($('#sa_' + i_this).val());
+                                                            stal = Number($('#sa_' + i_this).val());
+                                                            stol = Number($('#so_' + i_this).val());
+                                                            dal = dur;
                                                             var sd = 0;
+                                                            player.seekTo(Number($('#sa_' + i_this).val()));
+                                                            player.pauseVideo();
                                                             //Separate word
                                                             var art = v_str.split(' ');
-                                                            var ll = '';
-                                                            for (var i = 0; i < art.length; i++) {
-                                                                ll += '<span id="ll_ax_'+i+'" class="btn btn-default ll_ax">'+art[i]+'</span>';
+                                                            var to_art = art.length;
+                                                            var ll = '',
+                                                                e_a = 0;
+                                                            //[-----Divide time to each span-----]//
+                                                            // 
+                                                            e_a = ((dur / to_art) / dur) * 100;
+                                                            //[---]//
+                                                            for (var i = 0; i < to_art; i++) {
+                                                                ll += '<span data-l="' + art[i] + '" style="width:' + e_a + '%;" id="ll_ax_' + i + '" class="btn btn-default ll_ax">' + art[i] + '<strong>' + (dur / to_art).toFixed(2) + '</strong></span>';
                                                             }
-                                                            $('#slider').html(ll);
-                                                            $( ".ll_ax" ).resizable({
-                                                                handles:  'e',
-                                                                resize: function(e, u){
-                                                                    var w = u.size.width;
+                                                            $('#slider').attr('data-start', stal).html(ll);
+                                                            var mxw = $('#slider').width();
+                                                            var container = $('#slider');
+                                                            $('#dur_time').val(dur.toFixed(2));
+                                                            var sibTotalWidth;
+                                                            $(".ll_ax").resizable({
+                                                                handles: 'e',
+                                                                maxWidth: mxw,
+                                                                minWidth: 0,
+                                                                resize: function(e, ui) {
+                                                                    // var w = u.size.width;
+                                                                    ui.originalElement.next().width(sibTotalWidth - ui.originalElement.outerWidth());
+                                                                    // Get width size of other not this
+                                                                    var xx = $(".ll_ax").not(this);
+                                                                    var rw = 0;
+                                                                    for (var i = 0; i < xx.length; i++) {
+                                                                        rw += xx.eq(i).outerWidth();
+                                                                    }
+                                                                    // Set width this when ==  gaps  max width
+                                                                    if (ui.originalElement.outerWidth() >= (mxw - rw)) {
+                                                                        var gw = ((mxw - rw) / mxw) * 100;
+                                                                        ui.originalElement.css({
+                                                                            width: gw + '%'
+                                                                        });
+                                                                        $(this).find('strong').html((gw * dur / 100).toFixed(2));
+                                                                    }
+                                                                    // console.log(((ui.originalSize.width)));
+                                                                },
+                                                                start: function(e, ui) {
+                                                                    sibTotalWidth = ui.originalElement.outerWidth() + ui.originalElement.next().outerWidth();
+                                                                },
+                                                                stop: function(e, ui) {
+                                                                    var cellPercentWidth = 100 * ui.originalElement.outerWidth() / container.width();
+                                                                    ui.originalElement.css('width', cellPercentWidth + '%');
+                                                                    var dt = ((cellPercentWidth * dur) / 100).toFixed(2);
+                                                                    $(this).find('strong').html(dt);
+                                                                    var nextCell = ui.originalElement.next();
+                                                                    var nextPercentWidth = 100 * nextCell.outerWidth() / container.width();
+                                                                    nextCell.css('width', nextPercentWidth + '%');
+                                                                    nextCell.find('strong').html(((nextPercentWidth * dur) / 100).toFixed(2));
+                                                                    // console.log(container.width());
 
-                                                                    console.log(u);
                                                                 }
                                                             });
                                                         });
                                                         $('#play').on('click', function() {
                                                             // interval;
                                                             // player.playVideo();
-                                                            if ($(this).hasClass('pause')) {
-                                                                $(this).removeClass('pause').html('<i class="fa fa-pause"></i>');
-                                                                player.playVideo();
-                                                            } else {
-                                                                $(this).addClass('pause').html('<i class="fa fa-play"></i>');
+                                                            var itv = setInterval(function() {
+                                                                t = player.getCurrentTime();
+                                                            }, 10);
+                                                            if (player.getPlayerState() == 1) {
                                                                 player.pauseVideo();
+                                                                $(this).html('<i class="fa fa-play"></i>');
+                                                            } else {
+                                                                player.playVideo();
+                                                                $(this).html('<i class="fa fa-pause"></i>');
                                                             }
-                                                            // player.seekTo(10);
+                                                           
+                                                            player.seekTo(10);
                                                         });
 
                                                         $('#pause').on('click', function() {
                                                             player.pauseVideo();
                                                         });
+
+                                                        $('#save').on('click', function(e) {
+                                                            var sp = $('#slider').children('span');
+                                                            var tp='',tf = '';
+                                                            if (sp.length > 0) {
+                                                                tf += '"'+(i_this-1)+'":[';
+                                                                sp.each(function(i) {
+                                                                    var s = stal;
+                                                                    if (i == 0) {
+                                                                        s = stal;
+                                                                    } else {
+                                                                        for (var k = 0; k < i; k++) {
+                                                                            s = s + Number(sp.eq(k).find('strong').html());
+                                                                        }
+                                                                    }
+                                                                    tf += '{"w":"' + $('#ll_ax_' + i).data('l') + '","s":"' + s.toFixed(2) + '", "d":"' + sp.eq(i).find('strong').html() + '"},';
+                                                                });
+                                                                tf = tf.replace(/\,$/, '')+'],';
+                                                                // console.log(tf);
+                                                                $('#kr_' + i_this).val(tf);
+                                                                // console.log($('#kr_'+i_this).val());
+
+                                                            }
+                                                        });
+
+                                                        $('#submit_kara').on('click', function(e) {
+                                                            var hdv = $('input[name="kr[]"]');
+                                                            var r = '';
+                                                            hdv.each(function(i, e) {
+                                                                r += hdv.eq(i).val();
+                                                            });
+                                                            $.ajax({
+                                                                type: 'POST',
+                                                                data: {
+                                                                    "kr": '{' + r.replace(/\,$/, '') + '}',
+                                                                    "song": $('input[name="song"]').val()
+                                                                },
+                                                                success: function(data){
+                                                                    console.log(data);
+                                                                },
+                                                                error: function(e){
+                                                                    console.log(e);
+                                                                }
+                                                            });
+                                                            // console.log('['+r.replace(/\,$/, '')+']');
+                                                        });
                                                     });
                                                     </script>
                                                 </td>
-                                                <td width="10%">
+                                            </tr>
+                                            <tr>
+                                                <td width="50%">
+                                                    <input id="dur_time" type="text" placeholder="Duration time.." title="Duration time">
                                                     <input id="set_time" type="text" placeholder="Current time..">
                                                 </td>
-                                                <td width="20%">
+                                                <td width="50%">
                                                     <button type="button" class="btn btn-success"><i class="fa fa-retweet"></i></button>
                                                     <button type="button" class="btn btn-primary pause" id="play"><i class="fa fa-play"></i></button>
+                                                    <button id="save" type="button" class="btn btn-default"><i class="fa fa-save"></i></button>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -272,9 +362,12 @@
                                                     
                                             ?>
                                             <tr id="rl_<?php echo $i+1; ?>" class="rlclick">
-                                                <td><?php echo $i+1; ?></td>
+                                                <td>
+                                                    <?php echo $i+1; ?>
+                                                </td>
                                                 <td>
                                                     <input id="il_<?php echo $i+1; ?>" type="text" style="width:100%;" name="line[]" readonly="true" placeholder="Input lyric..." value="<?php echo $ts[$i]['line'] ?>">
+                                                    <input type="hidden" name="kr[]" id="kr_<?php echo $i+1; ?>">
                                                 </td>
                                                 <td>
                                                     <input id="sa_<?php echo $i+1; ?>" type="text" name="start[]" readonly="true" class="field_start sa_01" placeholder="00:00:00" value="<?php echo $ts[$i]['start']; ?>">
@@ -287,13 +380,14 @@
                                                     <button id="bl_<?php echo $i+1; ?>" type="button" class="btn btn-default btn-kara-start"><i class="fa fa-refresh"></i></button>
                                                 </td>
                                             </tr>
-                                            <?php }
-                                                } ?>
+                                            <?php } ?>
+                                            <input type="hidden" name="song" value="<?php echo $s->sis ?>">
+                                            <?php } ?>
                                         </tbody>
                                     </table>
                                 </div>
                                 <div class="panel-footer text-right">
-                                    <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-saved"></span> Save</button>
+                                    <button id="submit_kara" onclick="javascript:void(0);return false;" type="submit" class="btn btn-success"><span class="glyphicon glyphicon-saved"></span> Save</button>
                                     <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
                                 </div>
                                 <!-- Table -->
@@ -306,6 +400,7 @@
         </div>
     </div>
     <script type="text/javascript" src="../js/main.js"></script>
+    <script type="text/javascript" src="../js/st_karaok.js"></script>
 </body>
 
 </html>

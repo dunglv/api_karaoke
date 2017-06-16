@@ -87,7 +87,7 @@
                                                 btn_start.each(function(i) {
                                                     btn_start.eq(i).on('click', function(e) {
                                                         var id = $(this).attr('id').substr(9);
-                                                        $('.start_' + id).val(Math.floor(player.getCurrentTime()));
+                                                        $('.start_' + id).val(player.getCurrentTime().toFixed(2));
                                                         // console.log($('#vid').getCurrentTime());
                                                     });
                                                 });
@@ -95,7 +95,7 @@
                                                 btn_stop.each(function(i) {
                                                     btn_stop.eq(i).on('click', function(e) {
                                                         var id = $(this).attr('id').substr(8);
-                                                        $('.stop_' + id).val(Math.floor(player.getCurrentTime()));
+                                                        $('.stop_' + id).val(player.getCurrentTime().toFixed(2));
                                                         // console.log($('#vid').getCurrentTime());
                                                     });
                                                 });
@@ -225,89 +225,6 @@
                                 <!-- Table -->
                             </div>
                     </form>
-                    </div>
-                    <div class="col-md-7">
-                        <div class="panel panel-info">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Panel Left</h3>
-                            </div>
-                            <div class="panel-body">
-                                <table class="table table-striped table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>#No</th>
-                                            <th>Word</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Lorem ipsum dolor sit amet, consectetur adipisicing.</td>
-                                            <td>
-                                                <button class="btn btn-success"><span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span></button>
-                                                <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Lorem ipsum dolor sit amet, consectetur adipisicing.</td>
-                                            <td>
-                                                <button class="btn btn-success"><span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span></button>
-                                                <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Lorem ipsum dolor sit amet, consectetur adipisicing.</td>
-                                            <td>
-                                                <button class="btn btn-success"><span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span></button>
-                                                <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>4</td>
-                                            <td>Lorem ipsum dolor sit amet, consectetur adipisicing.</td>
-                                            <td>
-                                                <button class="btn btn-success"><span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span></button>
-                                                <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-5">
-                        <div class="panel panel-info">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Panel right</h3>
-                            </div>
-                            <div class="panel-body">
-                                <table class="table table-striped table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>#No</th>
-                                            <th>#Text</th>
-                                            <th>#Timing</th>
-                                            <th>#Save</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td width="1%">1</td>
-                                            <td width="50%"><span class="word">Lorem</span></td>
-                                            <td>
-                                                <input type="text" name="#" value="01:00:00">
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-saved"></span></button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

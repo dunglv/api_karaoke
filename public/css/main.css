@@ -1,91 +1,168 @@
 @import url("https://fonts.googleapis.com/css?family=Oswald:400,600");
-html, body, #app, .container{
-	height: 100%;
-	margin: 0;
-	padding: 0;
-	font-family: "Oswald", sans-serif;
-	font-weight: 400;
-	font-size: 14px;
-}
-.container{
-	margin-left: auto;
-	margin-right: auto;
-}
-#secmain{
-	height: 100%;
-	background: url('../images/vadim-sherbakov-41909.jpg') no-repeat;
-	background-size: 100% 100%;
-	position: relative;
-}
-.showprint{
-	height: 100%;
-	position: relative;
-}
-.kr-line{
-	display: block;
-	position: absolute;;
-	bottom: 5%;
-	width: 100%;
-	left: 0;
-	z-index: 1;
+html,
+body,
+#app,
+.container {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: "Oswald", sans-serif;
+    font-weight: 400;
+    font-size: 14px;
 }
 
-.line span{
-	/*display: block;*/
-	margin-right: 10px;
-	position: relative;
-	font-size: 3em;
-	color: #19a6c7;
-	text-decoration: none;
-	white-space: nowrap;
-	text-shadow: 0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111;
-	/*font-weight: 600;*/
+.container {
+    margin-left: auto;
+    margin-right: auto;
 }
-.line.active span::before{
-	content: attr(data-kara);
+
+#secmain {
+    height: 100%;
+    background: url('../images/vadim-sherbakov-41909.jpg') no-repeat;
+    background-size: 100% 100%;
+    position: relative;
+    z-index: 0;
+}
+#secmain::before{
+	/*content: '';*/
 	position: absolute;
-	left: 0;
-	height: 100%;
 	top: 0;
-	width: 0;
-	overflow: hidden;
-	white-space: nowrap;
-	text-decoration: none;
-	/*text-shadow: 0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111;*/
-	color: #fff;
-}
-.line.active span.voiced::before{
+	left: 0;
 	width: 100%;
-	-webkit-transition: inherit;
-	-o-transition: inherit;
-	transition: inherit;
+	height: 100%;
+	background:rgba(0, 0, 0, 0);
+	z-index: 1000;
 }
-.line.unvoice{
-	color: #0E7FA0;
+.showprint {
+    height: 100%;
+    position: relative;
 }
+
+.kr-line {
+    display: block;
+    position: absolute;
+    ;
+    bottom: 5%;
+    width: 100%;
+    left: 0;
+    z-index: 1;
+}
+
+.line span {
+    /*display: block;*/
+    margin-right: 10px;
+    position: relative;
+    font-size: 3em;
+    color: #19a6c7;
+    text-decoration: none;
+    white-space: nowrap;
+    text-shadow: 0 0 1px #111, 0 0 1px #111, 0 0 1px #111, 0 0 1px #111, 0 0 1px #111, 0 0 1px #111, 0 0 1px #111, 0 0 1px #111, 0 0 1px #111, 0 0 1px #111, 0 0 1px #111, 0 0 1px #111, 0 0 1px #111, 0 0 1px #111, 0 0 1px #111, 0 0 1px #111, 0 0 1px #111, 0 0 1px #111, 0 0 2px #111, 0 0 2px #111, 0 0 2px #111, 0 0 2px #111, 0 0 2px #111, 0 0 2px #111, 0 0 2px #111, 0 0 2px #111, 0 0 2px #111, 0 0 2px #111;
+    /*font-weight: 600;*/
+}
+
+.line.active span::before {
+    content: attr(data-kara);
+    position: absolute;
+    left: 0;
+    height: 100%;
+    top: 0;
+    width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-decoration: none;
+    /*text-shadow: 0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 1px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111,0 0 2px #111;*/
+    color: #fff;
+}
+
+.line.active span.voiced::before {
+    width: 100%;
+    -webkit-transition: inherit;
+    -o-transition: inherit;
+    transition: inherit;
+}
+
+.line.unvoice {
+    color: #0E7FA0;
+}
+
+
 /*.line span.voiced{
 	color: #fff;
 }*/
-.line.male{
-	color: #351AFF;
-}
-.line.female{
-	color: #D22E2E;
-}
-.line.line-top{
-	display: table;
-	margin-right: auto;
-	text-align: left;
-	white-space: nowrap;
-}
-.line.line-bottom{
-	display: table;
-	margin-left: auto;
-	text-align: right;
-	white-space: nowrap;
+
+.line.male {
+    color: #351AFF;
 }
 
-.ll_ax{
-	margin-left: 10px;
-	margin-bottom: 10px;
+.line.female {
+    color: #D22E2E;
+}
+
+.line.line-top {
+    display: table;
+    margin-right: auto;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.line.line-bottom {
+    display: table;
+    margin-left: auto;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.ct_slider {
+    border: 1px solid  #ccc;
+    min-height: 50px;
+    min-width: 100%;
+    padding: 5px;
+    background: #f7f7f7;
+    position: relative;
+    overflow: hidden;
+}
+#slider{
+	position: relative;
+}
+#slider.play::before{
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 27%;
+	height: 100%;
+	background: rgba(39, 123, 43, 0.88);
+	z-index: 0;
+	-webkit-transition: 0.3s;
+	-o-transition: 0.3s;
+	transition: 0.3s;
+}
+
+.ll_ax {
+	position: relative;
+	z-index: 1;
+	border-radius: 0;
+	min-height: 100px;
+	cursor: initial;
+	padding: 0;
+	border-color: #949494;
+	background: rgba(245, 245, 245, 0.69);
+}
+.ll_ax:hover, .ll_ax:active{
+	background: rgba(245, 245, 245, 0.3) !important;
+}
+
+.ll_ax strong{
+	position: absolute;
+	bottom: 1px;
+	border-radius: 90%;
+	padding-left: 10px;
+	padding-right: 10px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent #ccc transparent #ccc;
+	left: 50%;
+	margin-left: -20px;
+	color: #999;
+	font-size: 12px;
 }
